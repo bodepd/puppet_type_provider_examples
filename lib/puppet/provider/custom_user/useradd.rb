@@ -38,12 +38,11 @@ Puppet::Type.type(:custom_user).provide(:useradd) do
     (options << '-g' << resource[:gid])   if resource[:gid]
     (options << '-s' << resource[:shell]) if resource[:shell]
     useradd(resource[:name], options)
-    @property_hash[:ensure] = :present
   end
 
   def destroy
     userdel(resource[:name])
-    @property_hash[:ensure] = :absent
+    @property_hash.clear
   end
 
   def exists?
@@ -51,9 +50,12 @@ Puppet::Type.type(:custom_user).provide(:useradd) do
   end
 
   def flush
-    if @property_hash[:ensure] == :present
-      usermod('-u', @property_hash[:uid], '-g', @property_hash[:gid], '-s', @property_hash[:shell], resource[:name])
-    end
+    options = []
+    (options << '-u' << resource[:uid])   if @property_hash[:uid]
+    (options << '-g' << resource[:gid])   if @property_hash[:gid]
+    (options << '-s' << resource[:shell]) if @property_hash[:shell]
+    usermod(options, resource[:name]) unless options.empty?
+    @property_hash = resource.to_hash
   end
 
 end

@@ -2,13 +2,15 @@ Puppet::Type.newtype(:custom_package) do
 
   desc 'custom_package is an example of how to write a Puppet type.'
 
+  feature :versionable, "Package manager interrogate and return software version.", :methods => [:version]
+
   ensurable
 
   newparam(:name, :namevar => true) do
     desc 'The name of the software package.'
   end
 
-  newproperty(:version) do
+  newproperty(:version, :required_features => :versionable) do
     desc 'version of a package that should be installed'
     validate do |value|
       fail("Invalid version #{value}") unless value =~ /^[0-9A-Za-z\.-]+$/
