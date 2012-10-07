@@ -1,5 +1,9 @@
 Puppet::Type.newtype(:custom_service) do
-  # This sample service has not state just refresh ability.
+
+  newparam(:name, :namevar => true) do
+  end
+
+  # This sample service has no state just refresh ability.
   def refresh
     if (@parameters[:ensure] == :running)
       provider.restart
