@@ -1,0 +1,3 @@
+puppet_config { 'foo':
+
+}
