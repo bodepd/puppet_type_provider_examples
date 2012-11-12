@@ -40,7 +40,8 @@
 #}
 
 custom_package { 'httpd':
-  provider => gems
+    ensure => present,
+#  provider => gems
 #  ensure  => present,
 #  version => '1.2.3-5',
 }
