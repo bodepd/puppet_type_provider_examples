@@ -40,8 +40,13 @@
 #}
 
 custom_package { 'httpd':
-    ensure => present,
+    ensure => absent,
 #  provider => gems
 #  ensure  => present,
 #  version => '1.2.3-5',
+}
+
+custom_package { 'mysql':
+  ensure => present,
+  version => '5.0.95-1.el5_7.1',
 }
