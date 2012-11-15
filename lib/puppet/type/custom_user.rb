@@ -17,8 +17,4 @@ Puppet::Type.newtype(:custom_user) do
   newproperty(:shell) do
   end
 
-  newproperty(:groups, :array_matching => :all) do
-  end
-
-
 end
